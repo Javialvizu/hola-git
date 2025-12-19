@@ -1,1 +1,2 @@
-Hola esta es mi practica de git
+Estoy practicando el control de versiones de git esto con README.md
+
