@@ -1,2 +1,2 @@
-Estoy practicando el control de versiones de git esto con README.md
+Practica de commit NO.2
 
