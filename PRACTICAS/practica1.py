@@ -1,3 +1,6 @@
-nombre = input("Ingrese su nombre: ")
-print("El nombre ingresado fue: ", nombre)
-print("Esta es una practica")
+contador = 1
+
+while contador <= 5:
+    print("NIGGA", contador)
+    contador += 1
+    
