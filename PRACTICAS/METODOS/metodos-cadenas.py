@@ -1,4 +1,4 @@
-cadena1 = "holasoyJavier"
+cadena1 = "hola,soy,Javier,Alvizures"
 cadena2 = "estoy aprendiendo Python  "
 
 "Metodos para cadenas de texto"
@@ -39,7 +39,32 @@ print(resultado)
 #Contar cuantas veces aparece un caracter en una cadena
 resultado = cadena1.count("a")
 print(resultado)
-#
+
+#Contar cuantos caracteres tiene una cadena
+resultado = len(cadena1)
+print(resultado)
+
+#Verificar si una cadena empieza con otra cadena
+resultado = cadena1.startswith("hola")
+print(resultado)
+
+#Verificar si una cadena termina con otra cadena
+resultado = cadena1.endswith("Javier")
+print(resultado)
+
+#Remplazar valor en una cadena
+resultado = cadena1.replace(",", " ")   
+resultado = resultado.capitalize()
+print(resultado)
+
+#Dividir una cadena en varias partes
+resultado = cadena1.split(",")
+print(resultado)
+print(resultado[2])
+#Eliminar espacios en blanco al inicio y al final de una cadena
+resultado = cadena1.strip()
+print(resultado)
+
 
 
 
