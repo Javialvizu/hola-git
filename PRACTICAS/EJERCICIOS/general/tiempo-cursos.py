@@ -12,3 +12,7 @@ print(f"El curso normal dura {(curso_normal / curso_rapido * 100) - 100:.2f}% ma
 "---PARTE B: Comparacion de duracion cruda de cursos---"
 print(f"Existe un {100 - (curso_rapido_crudo / curso_normal_crudo * 100):.2f} % de conenido inutil")
 print(f"El curso rapido tiene un { (curso_normal_crudo / curso_rapido_crudo * 100)-100:.2f} % de contenido real ")
+
+"---PARTE C: Comparacion de duracion real de cursos embase a 10 horas---"
+print(f"Ver 10 horas del curso rapido equivale a {10*(curso_normal/curso_rapido):.2f} horas del curso normal")
+print(f"Ver 10 horas del cuerso normal equivale a {10*(curso_rapido / curso_normal):.2f} horas del curso rapido horas")
