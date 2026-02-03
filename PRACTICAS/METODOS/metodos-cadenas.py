@@ -1,4 +1,4 @@
-cadena1 = "hola,soy,Javier,Alvizures"
+cadena1 = " hola,soy,Javier,Alvizures "
 cadena2 = "estoy aprendiendo Python  "
 
 "Metodos para cadenas de texto"
@@ -61,6 +61,7 @@ print(resultado)
 resultado = cadena1.split(",")
 print(resultado)
 print(resultado[2])
+
 #Eliminar espacios en blanco al inicio y al final de una cadena
 resultado = cadena1.strip()
 print(resultado)
