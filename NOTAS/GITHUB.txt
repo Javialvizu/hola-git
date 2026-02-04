@@ -1,0 +1,91 @@
+--------------------
+Configuración inicial (solo una vez por PC)
+--------------------
+git config --global user.name "TuNombre"
+git config --global user.email "javialvizugar@gmail.com"
+git config --global init.defaultBranch main
+
+Ver configuración:
+git config --list
+
+--------------------
+Configurar clave SSH para GitHub (solo una vez por PC)
+--------------------
+Generar clave:
+ssh-keygen -t ed25519 -C "javialvizugar@gmail.com"
+# Pulsa ENTER en todo (sin nombre de archivo ni passphrase)
+
+Copiar clave pública:
+Get-Content $HOME\.ssh\id_ed25519.pub | Set-Clipboard
+# Ve a GitHub > Settings > SSH and GPG keys > New SSH key y pega
+
+--------------------
+Crear o abrir un proyecto local
+--------------------
+Opción A: Crear nuevo repositorio desde cero
+mkdir nombre-proyecto
+cd nombre-proyecto
+git init
+
+Opción B: Ir a proyecto existente
+cd C:\Ruta\De\Tu\Proyecto
+
+--------------------
+Conectar con GitHub (remote)
+--------------------
+Ver remotes existentes:
+git remote -v
+
+Agregar remote (si no existe, usa SSH):
+git remote add origin git@github.com:TU_USUARIO/nombre-proyecto.git
+
+--------------------
+Sincronizar por primera vez (traer archivos de GitHub, ej. README)
+--------------------
+git pull origin main --allow-unrelated-histories
+
+--------------------
+Flujo de trabajo diario
+--------------------
+1. Ver estado
+git status
+
+2. Preparar cambios (staging)
+git add .                  # Todos los cambios
+# o
+git add archivo.py          # Archivo específico
+
+3. Crear commit
+git commit -m "Descripción clara y breve del cambio"
+
+4. Subir a GitHub
+Primera vez:
+git push -u origin main
+Después:
+git push
+
+5. Traer cambios de GitHub (si trabajas en equipo)
+git pull
+
+--------------------
+Comandos útiles adicionales
+--------------------
+Ver historial de commits:
+git log
+git log --oneline          # Resumido
+
+Ver diferencias:
+git diff                   # Cambios no agregados
+git diff --staged          # Cambios en staging
+
+Eliminar carpeta forzada (PowerShell):
+Remove-Item -Recurse -Force nombre-carpeta
+
+--------------------
+Resumen del ciclo que repetirás siempre
+--------------------
+git status
+git add .
+git commit -m "Descripción del cambio"
+git push
+# (Y git pull antes si esperas cambios de otros)

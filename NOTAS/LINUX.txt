@@ -1,0 +1,418 @@
+# -----COMANDOS LINUX-----
+
+###### **Comados extras iniciales**
+
+Abrir CMD en Ubuntu Ctrl+Alt+T
+
+Clear - limpiar el cmd
+
+Abrir .txt = xdg-open archivo.txt
+
+#### **Navegación por el sistema de archivos**
+
+. = carpeta actual
+
+.. = carpeta anterior
+
+~ = tu carpeta personal
+
+
+
+pwd - Mostrar ruta actual
+
+ls - Listar archivos y carpetas
+
+ls -l - Listar con detalles
+
+ls -a - Listar incluyendo ocultos
+
+cd ~ - lleva a home
+
+cd carpeta - Entrar a carpeta
+
+cd ../Música - Entrar a una carpeta estando ya en una
+
+cd .. - Subir un nivel
+
+cd - Ir a carpeta personal
+
+tree - Ver árbol de directorios (si está instalado)
+
+
+
+#### **Archivos y carpetas**
+
+touch archivo.txt - Crear archivo vacío
+
+cat archivo.txt - Ver contenido
+
+mkdir carpeta - Crear carpeta
+
+cp origen destino - Copiar archivo/carpeta
+
+mv origen destino - Mover/renombrar
+
+mv origen ../destino ' Mover a otra carpeta externa
+
+rm archivo.txt - Eliminar archivo
+
+rm -r carpeta/ - Eliminar carpeta (■■ cuidadoso)
+
+echo "Hola Linux, soy el crack de Ubuntu" > hola.txt - Ingresar texto en un .TXT
+
+
+
+#### **Permisos y propietarios**
+
+\- rw- r-- r--
+
+  │   │   └─ otros (o)
+
+  │   └──── grupo (g)
+
+  └──────── usuario dueño (u)
+
+
+
+-usuario(dueño): rw-(leer,escribir)
+
+-grupo: r--(solo leer)
+
+-otros: r--(solo leer)
+
+
+
+**Forma básica**
+
+chmod -x archivo        # quitar permiso de ejecución
+
+chmod +x archivo        # dar permiso de ejecución
+
+chmod -r archivo | chmod -r archivo
+
+chmod -w archivo | chmod -w archivo
+
+
+
+**Permisos por categorías**
+
+chmod u+r archivo    # usuario
+
+chmod g+w archivo    # grupo
+
+chmod o-r archivo    # otros
+
+chmod go-w archivo   # grupo y otros
+
+chmod ugo+r archivo  # todos
+
+chmod go-rwx archivo # grupo y otros (todo)
+
+
+
+
+
+**Realizar backups de un solo archivo**
+
+cp archivo.txt ../BACKUPS/archivo\_backup.txt
+
+
+
+#### **Usuarios y grupos**
+
+whoami                 # ver tu usuario actual
+
+id                     # ver UID, GID y grupos
+
+sudo adduser nombre    # crear usuario (completo, con home)
+
+sudo passwd nombre     # cambiar contraseña
+
+sudo deluser nombre    # eliminar usuario
+
+sudo deluser --remove-home nombre   # eliminar usuario + carpeta personal
+
+sudo chown usuario\_nuevo nombre\_archivo #cambiar dueño de archivo
+
+
+
+groups                 # ver grupos donde perteneces
+
+sudo addgroup grupo    # crear grupo
+
+sudo usermod -aG grupo usuario   # agregar usuario a grupo
+
+
+
+###### **Procesos**
+
+**Listas procesos**
+
+ps aux                 # todos los procesos
+
+ps aux | grep nombre   # filtrar por nombre
+
+top                    # monitor en tiempo real
+
+htop                   # versión mejor (si está instalado)
+
+
+
+**Procesos en foreground / background**
+
+comando \&              # enviar al background
+
+fg %1                  # traer job al foreground
+
+bg %1                  # reanudar job en background
+
+jobs                   # ver trabajos de tu shell
+
+Ctrl + Z               # suspender proceso
+
+Ctrl + C               # matar proceso en foreground
+
+
+
+**Señales**
+
+kill PID               # pedir que termine
+
+kill -9 PID            # matar FORZADO
+
+kill -15 PID           # parada elegante (SIGTERM)
+
+
+
+**Ejemplos prácticos**
+
+yes > /dev/null \&      # proceso infinito controlado
+
+sleep 300 \&            # proceso temporizador
+
+## 
+
+#### **Red y conectividad**
+
+ip a                   # mostrar todas las interfaces y tu IP local
+
+ip route               # ver tu puerta de enlace (router)
+
+ping -c 4 IP           # probar conexión a una IP (solo 4 paquetes)
+
+ping -c 4 google.com   # probar conexión a internet
+
+arp -a                 # ver dispositivos conectados a la red local (tabla ARP)
+
+
+
+**Puertos y servicios**
+
+ss -tuln               # ver puertos abiertos y servicios escuchando
+
+sudo ss -tulnp         # ver qué proceso usa cada puerto
+
+
+
+**Escaneo de red (si tienes nmap instalado)**
+
+nmap IP                # escanear puertos de un dispositivo
+
+nmap 192.168.1.0/24    # escanear toda la red local
+
+
+
+**SSH — conexión remota segura**
+
+
+
+**(Ejecutar en PowerShell admin: Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0**
+
+**)->activamos las características de ssh que buscaremos en panel de control firewell**
+
+**(Asegurar por medio de firewell las conexiones ssh)New-NetFirewallRule -Name sshd -DisplayName "OpenSSH Server" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22**
+
+
+
+
+
+ssh usuario@IP         # conectarse a otra máquina por SSH
+
+
+
+**Transferencia de archivos por SSH (SCP)**
+
+scp privado madeline@192.168.1.246:/Users/Madeline/Desktop/   # enviar archivo a otra máquina
+
+
+
+scp \\Users\\Madeline\\Documents\\publico.txt Javialvizu@192.168.1.220:/home/Javialvizu/.   # traer archivo desde Windows
+
+
+
+#### **-----GESTIÓN DE SOFTWARE EN LINUX (APT)-----**
+
+
+
+**APT (Advanced Package Tool) es el sistema de gestión de software en Ubuntu.**
+
+**Sirve para:**
+
+\- instalar programas
+
+\- actualizar el sistema
+
+\- eliminar software
+
+\- buscar paquetes
+
+\- mantener el sistema seguro y estable
+
+
+
+---
+
+**Actualizar el sistema**
+
+---
+
+
+
+sudo apt update          # actualizar la lista de paquetes disponibles
+
+sudo apt upgrade         # actualizar los paquetes instalados
+
+sudo apt full-upgrade    # actualizar sistema permitiendo cambios de dependencias
+
+
+
+---
+
+**Instalar paquetes**
+
+---
+
+
+
+sudo apt install nombre\_paquete     # instalar un programa
+
+
+
+Ejemplos:
+
+sudo apt install htop                # monitor de procesos avanzado
+
+sudo apt install neofetch            # información del sistema
+
+sudo apt install nmap                # escaneo de red
+
+sudo apt install traceroute          # ver ruta de red
+
+sudo apt install tree                # ver árbol de carpetas
+
+
+
+---
+
+**Ejecutar programas instalados**
+
+---
+
+
+
+htop        # abrir monitor de procesos
+
+neofetch    # mostrar información del sistema
+
+tree        # mostrar estructura de carpetas
+
+
+
+---
+
+**Buscar información de paquetes**
+
+---
+
+
+
+apt search nombre          # buscar paquetes disponibles
+
+apt show nombre            # ver información detallada del paquete
+
+
+
+Ejemplo:
+
+apt search nmap
+
+apt show nmap
+
+
+
+---
+
+**Desinstalar paquetes**
+
+---
+
+
+
+sudo apt remove nombre     # desinstalar programa (mantiene configuración)
+
+sudo apt purge nombre      # desinstalar + borrar configuración
+
+sudo apt autoremove        # eliminar dependencias que ya no se usan
+
+
+
+---
+
+**Reparar errores de APT**
+
+---
+
+
+
+sudo dpkg --configure -a   # reparar instalación interrumpida
+
+sudo apt --fix-broken install   # arreglar dependencias rotas
+
+
+
+---
+
+**Limpiar el sistema**
+
+---
+
+
+
+sudo apt clean             # borrar archivos .deb descargados
+
+sudo apt autoclean         # limpiar paquetes antiguos
+
+sudo apt autoremove        # eliminar dependencias innecesarias
+
+
+
+---
+
+**Buenas prácticas**
+
+---
+
+
+
+\- Siempre ejecutar "sudo apt update" antes de instalar
+
+\- No cerrar la terminal mientras APT trabaja
+
+\- Usar "purge" si no quieres dejar rastros
+
+\- Mantener el sistema actualizado regularmente
+
+
+
+###### **Ayuda y manuales**
+
