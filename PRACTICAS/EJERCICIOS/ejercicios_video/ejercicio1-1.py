@@ -13,8 +13,9 @@ curso_actual_crudo = 3.5
 diferencia_curso_min = 100 - curso_actual / otros_cursos_min * 100
 print(diferencia_curso_min, "%")
 
-diferencia_curso_max = 100 - curso_actual * 10000 // otros_cursos_max / 100 #Podemos modificar los 0 para combenencia de lso decimales....
-print( diferencia_curso_max, "%")  
+diferencia_curso_max = 100 - curso_actual / otros_cursos_max * 100 #Podemos modificar los 0 para combenencia de lso decimales....
+resultado = round(diferencia_curso_max,2)
+print( resultado, "%")  
 
 diferencia_curso_promedio = 100 - curso_actual / otros_cursos_promedio * 100
 print(diferencia_curso_promedio, "%")           
