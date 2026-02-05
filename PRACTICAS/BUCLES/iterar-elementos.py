@@ -1,6 +1,6 @@
-#Creamos la lista
-animales = ["perro","gato","loro","cocodrilo"]
-numeros = [0,1,2,3,4,5,6,7,8,9,]
+#Creamos la lista(Funciona exactamente igual para tuplas y conjuntos)
+animales = {"perro","gato","loro","cocodrilo"}
+numeros = {0,1,2,3,4,5,6,7,8,9,}
 
 
 #PAsa por toda la lsita "animal" se vuelve en cada vuelta cada uno de los elementos
@@ -27,7 +27,14 @@ for num in range(5,10):
 print("------------------------------------------------------")
 
 #Funcion enumerate
-for num in enumerate(numeros):
-    indice = num[0]
-    valor = num[1]
+for animal in enumerate(animales):
+    indice = animal[0]#0 significa indice 
+    valor = animal[1]#1 significa valor
     print(f"El indice  es: {indice} y el valor es {valor}")
+
+print("-------------------------------------------------------------")
+#BUcle for + else
+for numero in numeros:
+    print(f"La lista contiene los numeros: {numero}")
+else:
+    print("La lista finalizo")
