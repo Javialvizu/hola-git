@@ -1,7 +1,7 @@
 #Creacion de una lista
 lista = list(["Javier","Alvizures",True,False,True,False,False])
 print(lista)
-
+lista_numeros = [2,3,5,121,61,8,9]
 
 #Devuelve la longitud de la lista
 cadena = "Hola"
@@ -38,12 +38,12 @@ lista.remove("Python")
 print(lista)
 
 #Ordenar la lista(Del menor al mayor)
-lista.sort()
-print(lista)
+lista_numeros.sort()
+print(lista_numeros)
 
 #Ordenar la lista(Del mayor al menor)   
-lista.sort(reverse=True)
-print(lista)
+lista_numeros.sort(reverse=True)
+print(lista_numeros)
 
 #Invertir el orden de la lista
 lista.reverse()
