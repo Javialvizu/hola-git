@@ -42,7 +42,7 @@ def buscar_por_nombre():
 def hay_ingenieros():
     contador_ingenierios = False
     for inge in lista_alumnos:
-        if inge['carrera'].lower == "ingenierio":
+        if inge['carrera'].lower() == "ingeniero":
             contador_ingenierios = True
     print(f"Existen alumnos ingenieros? {contador_ingenierios}")
 
