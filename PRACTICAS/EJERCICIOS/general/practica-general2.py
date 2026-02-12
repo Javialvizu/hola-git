@@ -33,6 +33,20 @@ def contar_mayores():
     print(f"Mayores de edad: {contador_mayor}")
     print(f"Menores de edad: {contador_menor}")
 
+def buscar_por_nombre():
+    nom = input("Ingrese el nombre que desea buscar: ")
+    for nombre in lista_alumnos:
+        if nombre['nombre'] == nom:
+            print(f"-{nombre['nombre'].capitalize()} {nombre['apellido'].capitalize()} {nombre['edad']} {nombre['carrera'].capitalize()}")
+
+def hay_ingenieros():
+    contador_ingenierios = False
+    for inge in lista_alumnos:
+        if inge['carrera'].lower == "ingenierio":
+            contador_ingenierios = True
+    print(f"Existen alumnos ingenieros? {contador_ingenierios}")
+
+
 def menu():
     while True:
         print("-----MENUS DE OPCIONES-----")
