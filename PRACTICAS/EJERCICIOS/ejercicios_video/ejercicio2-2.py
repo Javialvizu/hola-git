@@ -19,7 +19,7 @@ def ingreso_numero(num):
     primos = []
 
     # Recorremos los valores desde 3 hasta el número ingresado (inclusive)
-    for i in range(3, num + 1):
+    for i in range(2, num + 1):
         # Llamamos a la función numeros_primos_range para verificar
         # si el número actual es primo
         resultado = numeros_primos_range(i)
@@ -42,10 +42,7 @@ print(resultado)
 #Primos pero con lambda
 #Lo mismo pero con lambda
 primos_hasta = lambda num: list(filter(lambda x: all(x % i != 0 for i in range(2, int(x ** 0.5) + 1)), range(2, num+1)))
-"""Comprendo que creamos un lambda que devuelve num esta es tipo list
- dicha funcion filtra otra lambda con filter que incluye el lambda anterior que contiene: range(2, num)
-y ademas podemos ingresar otro lambda...este tiene los parametros no se chat mejor explicame ya me trabe
-"""
+
 print(primos_hasta(17))
 
 
