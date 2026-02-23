@@ -95,4 +95,5 @@ git push
 --------------------
 Metodo cuando se daña el repositorio local
 --------------------
-cp -r -i hola-git-roto/nombre_carpeta/* hola-git/nombre_carpeta/
+cp -r -i hola-git-roto/nombre_carpeta/* hola-git/nombre_carpeta/ #copiar datos al git clone
+rm -rf nombre_repositorios #Eliminar repositorio roto
