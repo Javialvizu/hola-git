@@ -92,3 +92,7 @@ git add .
 git commit -m "Descripción del cambio"
 git push
 # (Y git pull antes si esperas cambios de otros)
+--------------------
+Metodo cuando se daña el repositorio local
+--------------------
+cp -r -i hola-git-roto/nombre_carpeta/* hola-git/nombre_carpeta/
