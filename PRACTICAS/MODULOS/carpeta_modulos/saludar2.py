@@ -1,6 +1,6 @@
 #Llamamos al módulo_saludar, que se encuentra en el mismo directorio que este archivo
 import modulo_saludar as m_saludar
-import carpeta_modulos.saludar2 as m_saludar2
+
 #Llamamos a la función saludar del módulo_saludar, pero con el alias m_saludar
 from modulo_saludar import saludar, saludar_raro
 
@@ -10,7 +10,4 @@ print(type(m_saludar))
 print(saludar("Alvizures"))
 print(saludar_raro("Javier"))
 
-print(m_saludar2.saludar("Javiersito"))
-
-#Para ver las propiedades y funciones que tiene el módulo, usamos la función dir()
 print(dir(m_saludar))
