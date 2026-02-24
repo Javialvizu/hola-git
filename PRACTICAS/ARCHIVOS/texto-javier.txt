@@ -1,2 +1,14 @@
-Hola soy Javier.
-Este es un archivo de texto.
+
+Hola como estas?
+Escribir en archivos
+Otra linea masHola, este es un texto de prueba
+Hola, este es un texto de prueba
+Hola, este es un texto de prueba
+Hola, este es un texto de prueba
+Hola, este es un texto de prueba
+Hola, este es un texto de prueba
+Linea 1 Agregada
+Linea 2 Agregada
+Linea 3 Agregada
+Linea 4 Agregada
+Linea 5 Agregada
