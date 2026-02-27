@@ -1,0 +1,698 @@
+========================================
+   CREACIÓN Y CONFIGURACIÓN DE ORACLE DB
+========================================
+
+Oracle trabaja con:
+- CDB (Container DataBase)
+- PDB (Pluggable DataBase) → ejemplo: XEPDB1
+
+XEPDB1 es la base de datos donde trabajan los usuarios normales.
+SYS y SYSTEM administran la base de datos.
+
+------------------------------------------------
+1. VER BASES DE DATOS (PDB)
+------------------------------------------------
+
+SHOW PDBS;
+
+Sirve para ver las bases de datos disponibles (como XEPDB1).
+
+------------------------------------------------
+2. CONECTARSE A UNA PDB
+------------------------------------------------
+
+ALTER SESSION SET CONTAINER = XEPDB1;
+
+Esto indica que los comandos se aplicarán dentro de XEPDB1.
+
+------------------------------------------------
+3. CREAR USUARIO
+------------------------------------------------
+
+CREATE USER javialvizu
+IDENTIFIED BY Javialvizu77;
+
+------------------------------------------------
+4. DESBLOQUEAR USUARIO
+------------------------------------------------
+
+ALTER USER javialvizu ACCOUNT UNLOCK;
+
+------------------------------------------------
+5. ASIGNAR TABLESPACE
+------------------------------------------------
+
+ALTER USER javialvizu
+DEFAULT TABLESPACE users
+QUOTA UNLIMITED ON users;
+
+Esto permite que el usuario pueda crear tablas.
+
+------------------------------------------------
+6. PERMISOS (PRIVILEGIOS)
+------------------------------------------------
+
+Existen 2 tipos de permisos:
+
+A) Permisos del sistema (SYSTEM PRIVILEGES)
+   → afectan a toda la base de datos
+
+B) Permisos sobre objetos (OBJECT PRIVILEGES)
+   → afectan a tablas, vistas, etc.
+
+------------------------------------------------
+A) PERMISOS DEL SISTEMA
+------------------------------------------------
+!!!!Para permitir uso e el TABLESPACE debemos ejecutar el commando siguiente!!!!
+-ALTER USER Javialvizu QUOTA UNLIMITED ON USERS;
+
+Sirven para permitir acciones generales como:
+
+- CREATE TABLE
+- CREATE VIEW
+- CREATE SEQUENCE
+- CREATE PROCEDURE
+- CREATE SESSION
+
+Ejemplo (dar permisos básicos):
+
+GRANT CREATE SESSION TO javialvizu;
+GRANT CREATE TABLE TO javialvizu;
+GRANT CREATE VIEW TO javialvizu;
+GRANT CREATE SEQUENCE TO javialvizu;
+
+Permitir todos los DDL más comunes:
+
+GRANT
+CREATE TABLE,
+CREATE VIEW,
+CREATE SEQUENCE,
+CREATE PROCEDURE,
+CREATE TRIGGER
+TO javialvizu;
+
+------------------------------------------------
+B) PERMISOS SOBRE OBJETOS (TABLAS)
+------------------------------------------------
+
+Sirven para permitir trabajar con tablas específicas.
+
+Ejemplo:
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON alumnos
+TO javialvizu;
+
+Eso significa:
+- puede consultar (SELECT)
+- puede insertar (INSERT)
+- puede modificar (UPDATE)
+- puede borrar (DELETE)
+en la tabla ALUMNOS.
+
+------------------------------------------------
+7. OTORGAR TODOS LOS PERMISOS DML
+------------------------------------------------
+
+Sobre una tabla:
+
+GRANT ALL
+ON alumnos
+TO javialvizu;
+
+------------------------------------------------
+8. QUITAR PERMISOS (REVOKE)
+------------------------------------------------
+
+Quitar permisos sobre una tabla:
+
+REVOKE SELECT, INSERT
+ON alumnos
+FROM javialvizu;
+
+Quitar un permiso del sistema:
+
+REVOKE CREATE TABLE
+FROM javialvizu;
+
+------------------------------------------------
+9. VER PERMISOS DE UN USUARIO
+------------------------------------------------
+
+Permisos del sistema:
+
+SELECT * FROM dba_sys_privs
+WHERE grantee = 'JAVIALVIZU';
+
+Permisos sobre objetos:
+
+SELECT * FROM dba_tab_privs
+WHERE grantee = 'JAVIALVIZU';
+
+------------------------------------------------
+10. ELIMINAR USUARIO
+------------------------------------------------
+
+DROP USER javialvizu CASCADE;
+
+CASCADE elimina también:
+- tablas
+- vistas
+- secuencias
+- procedimientos
+
+------------------------------------------------
+11. CONEXIONES
+------------------------------------------------
+
+Una conexión NO es una base de datos.
+Una conexión solo guarda:
+- host (IP)
+- puerto (1521)
+- service name (XEPDB1)
+- usuario
+- contraseña
+
+Ejemplo de conexión:
+
+Host: 192.168.1.50
+Port: 1521
+Service name: XEPDB1
+User: javialvizu
+
+------------------------------------------------
+12. COMPARTIR LA DB EN RED
+------------------------------------------------
+
+La base de datos vive en una PC (servidor).
+Otras PCs se conectan usando la IP del servidor.
+
+No se copia la base de datos.
+Se accede remotamente por red.
+
+------------------------------------------------
+13. FIREWALL
+------------------------------------------------
+
+Debe estar abierto el puerto:
+
+1521 (TCP)
+
+Si está bloqueado:
+no se pueden conectar otras PCs.
+
+------------------------------------------------
+14. RESUMEN PROFESIONAL
+------------------------------------------------
+
+1. SYS/SYSTEM crean la base de datos
+2. SYS/SYSTEM crean usuarios
+3. SYS/SYSTEM asignan permisos
+4. Los usuarios trabajan dentro de XEPDB1
+5. Las conexiones solo apuntan a la DB
+6. La DB es única en el servidor
+7. Los permisos controlan qué puede hacer cada usuario
+
+
+========================================
+        DATA DEFINITION LANGUAGE (DDL)
+========================================
+
+DDL (Data Definition Language) se utiliza para:
+- Crear estructuras
+- Modificar estructuras
+- Eliminar estructuras
+de la base de datos (tablas, columnas, restricciones, etc.)
+
+------------------------------------------------
+1. CREATE TABLE (crear tablas)
+------------------------------------------------
+
+CREATE TABLE nombre_tabla (
+    columna1 tipo_dato,
+    columna2 tipo_dato,
+    columna3 tipo_dato
+);
+
+Ejemplo:
+CREATE TABLE alumnos (
+    id NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    nombre VARCHAR2(50),
+    edad NUMBER
+);
+
+------------------------------------------------
+LLAVE PRIMARIA (PRIMARY KEY)
+------------------------------------------------
+
+Sirve para identificar de forma única cada registro.
+
+Sintaxis:
+id NUMBER PRIMARY KEY
+
+o
+
+CONSTRAINT pk_alumnos PRIMARY KEY (id)
+
+------------------------------------------------
+LLAVE FORÁNEA (FOREIGN KEY)
+------------------------------------------------
+
+Sirve para relacionar tablas.
+
+Sintaxis:
+CONSTRAINT fk_carrera
+FOREIGN KEY (id_carrera)
+REFERENCES carreras(id_carrera)
+
+------------------------------------------------
+2. ALTER TABLE (modificar tablas)
+------------------------------------------------
+
+Agregar columna:
+ALTER TABLE alumnos
+ADD direccion VARCHAR2(100);
+
+Eliminar columna:
+ALTER TABLE alumnos
+DROP COLUMN direccion;
+
+Modificar tipo de dato:
+ALTER TABLE alumnos
+MODIFY nombre VARCHAR2(100);
+
+Renombrar tabla:
+ALTER TABLE alumnos
+RENAME TO estudiantes;
+
+------------------------------------------------
+3. DROP TABLE (eliminar tabla)
+------------------------------------------------
+
+Elimina la tabla completamente.
+
+DROP TABLE alumnos CASCADE CONSTRAINTS;
+
+CASCADE CONSTRAINTS:
+- elimina también las llaves foráneas asociadas
+
+------------------------------------------------
+4. TRUNCATE TABLE (vaciar tabla)
+------------------------------------------------
+
+Elimina todos los registros de la tabla,
+pero mantiene su estructura.
+
+TRUNCATE TABLE alumnos;
+
+Diferencia con DELETE:
+- TRUNCATE es más rápido
+- no se puede hacer ROLLBACK
+- no usa WHERE
+
+------------------------------------------------
+NOTAS IMPORTANTES
+------------------------------------------------
+
+- DDL no usa COMMIT ni ROLLBACK
+- Los cambios son permanentes
+- Se usa para estructura, no para datos
+
+========================================
+        APUNTES DML (DATA MANIPULATION LANGUAGE)
+========================================
+
+DML es el conjunto de sentencias que se usan para:
+- INSERTAR datos
+- CONSULTAR datos
+- MODIFICAR datos
+- ELIMINAR datos
+
+Las sentencias DML trabajan sobre los registros de las tablas.
+
+
+------------------------------------------------
+            INSERT
+------------------------------------------------
+Sirve para agregar registros a una tabla.
+
+SINTAXIS:
+
+INSERT INTO nombre_tabla (columna1, columna2, columna3)
+VALUES (valor1, valor2, valor3);
+
+EJEMPLO:
+
+INSERT INTO EMPLEADO (NOMBRE, APELLIDO, EDAD)
+VALUES ('Madeline', 'Alvizures', TO_DATE('2006-06-23','YYYY-MM-DD'));
+
+- TO_DATE convierte texto a tipo DATE
+- El orden de los valores debe coincidir con las columnas
+
+
+------------------------------------------------
+            SELECT
+------------------------------------------------
+Sirve para consultar datos de una tabla.
+
+SINTAXIS:
+
+SELECT columna1, columna2
+FROM nombre_tabla;
+
+EJEMPLO:
+
+SELECT nombre, apellido
+FROM empleado;
+
+Para ver todo:
+
+SELECT * FROM empleado;
+
+
+------------------------------------------------
+            WHERE
+------------------------------------------------
+Sirve para filtrar registros.
+
+SINTAXIS:
+
+SELECT columnas
+FROM tabla
+WHERE condicion;
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE id_empleado = 1;
+
+
+------------------------------------------------
+        OPERADORES DE COMPARACIÓN
+------------------------------------------------
+
+=   igual
+>   mayor que
+<   menor que
+>=  mayor o igual
+<=  menor o igual
+<>  diferente
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE id_empleado <> 2;
+
+
+------------------------------------------------
+        AND / OR
+------------------------------------------------
+
+AND -> ambas condiciones deben cumplirse  
+OR  -> una condición debe cumplirse
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE nombre = 'Madeline' AND apellido = 'Alvizures';
+
+
+------------------------------------------------
+            UPDATE
+------------------------------------------------
+Sirve para modificar registros existentes.
+
+SINTAXIS:
+
+UPDATE nombre_tabla
+SET columna = valor
+WHERE condicion;
+
+EJEMPLO:
+
+UPDATE empleado
+SET nombre = 'Javier'
+WHERE id_empleado = 1;
+
+IMPORTANTE:
+Si no usas WHERE, se modifican TODOS los registros.
+
+
+------------------------------------------------
+            DELETE
+------------------------------------------------
+Sirve para eliminar registros.
+
+SINTAXIS:
+
+DELETE FROM nombre_tabla
+WHERE condicion;
+
+EJEMPLO:
+
+DELETE FROM empleado
+WHERE id_empleado = 2;
+
+IMPORTANTE:
+Si no usas WHERE, se borran TODOS los registros.
+
+
+------------------------------------------------
+        COMMIT Y ROLLBACK
+------------------------------------------------
+
+COMMIT  -> guarda los cambios definitivamente  
+ROLLBACK -> deshace los cambios no guardados
+
+EJEMPLO:
+
+DELETE FROM empleado WHERE id_empleado = 3;
+ROLLBACK;   -- recupera el registro
+
+UPDATE empleado SET nombre='Ana' WHERE id_empleado=1;
+COMMIT;     -- guarda el cambio
+
+
+------------------------------------------------
+            DISTINCT
+------------------------------------------------
+Elimina valores repetidos.
+
+EJEMPLO:
+
+SELECT DISTINCT nombre
+FROM empleado;
+
+
+------------------------------------------------
+            ORDER BY
+------------------------------------------------
+Ordena los resultados.
+
+SINTAXIS:
+
+SELECT columnas
+FROM tabla
+ORDER BY columna ASC;   -- ascendente
+
+SELECT columnas
+FROM tabla
+ORDER BY columna DESC;  -- descendente
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+ORDER BY apellido ASC;
+
+
+------------------------------------------------
+            LIKE
+------------------------------------------------
+Sirve para buscar por patrones.
+
+% -> cualquier cantidad de caracteres  
+_ -> un solo carácter
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE nombre LIKE 'M%';   -- empieza con M
+
+SELECT * 
+FROM empleado
+WHERE apellido LIKE '%ez'; -- termina con ez
+
+
+------------------------------------------------
+            BETWEEN
+------------------------------------------------
+Sirve para buscar entre dos valores.
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE id_empleado BETWEEN 1 AND 5;
+
+
+------------------------------------------------
+            IN
+------------------------------------------------
+Sirve para buscar varios valores.
+
+EJEMPLO:
+
+SELECT * 
+FROM empleado
+WHERE id_empleado IN (1, 3, 5);
+========================================
+        PROCEDIMIENTOS
+========================================
+
+Un PROCEDIMIENTO:
+- Ejecuta acciones
+- NO devuelve un valor directamente
+- Puede mostrar resultados con DBMS_OUTPUT
+
+SINTAXIS GENERAL:
+
+CREATE OR REPLACE PROCEDURE nombre_procedimiento(
+    parametro IN tipo_dato
+) IS
+    variable tipo_dato;
+BEGIN
+    instrucciones;
+END;
+/
+
+------------------------------------------------
+PROCEDIMIENTO 1: obtener_nombre_completo
+------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE obtener_nombre_completo(
+    p_id_empleado IN empleado.id_empleado%TYPE
+) IS
+    v_nombre_completo VARCHAR2(50);
+BEGIN
+    SELECT nombre || ' ' || apellido
+    INTO v_nombre_completo
+    FROM empleado
+    WHERE id_empleado = p_id_empleado;
+
+    DBMS_OUTPUT.PUT_LINE('Nombre completo: ' || v_nombre_completo);
+END;
+/
+
+EJECUCIÓN:
+SET SERVEROUTPUT ON
+EXEC obtener_nombre_completo(1);
+
+- IN  -> parámetro de entrada
+- %TYPE -> toma el tipo de dato de la columna
+- SELECT ... INTO -> guarda el resultado en una variable
+- DBMS_OUTPUT.PUT_LINE -> imprime en pantalla
+
+
+------------------------------------------------
+PROCEDIMIENTO 2: sumar_numeros
+------------------------------------------------
+
+CREATE OR REPLACE PROCEDURE sumar_numeros (
+    num1 IN NUMBER,
+    num2 IN NUMBER
+) IS
+    resultado NUMBER;
+BEGIN
+    resultado := num1 + num2;
+    DBMS_OUTPUT.PUT_LINE('La suma es: ' || resultado);
+END;
+/
+
+EJECUCIÓN:
+EXEC sumar_numeros(10, 5);
+
+
+========================================
+            FUNCIONES
+========================================
+
+Una FUNCIÓN:
+- SIEMPRE devuelve un valor con RETURN
+- Se puede usar en un SELECT
+
+SINTAXIS GENERAL:
+
+CREATE OR REPLACE FUNCTION nombre_funcion(
+    parametro IN tipo_dato
+) RETURN tipo_dato IS
+    variable tipo_dato;
+BEGIN
+    instrucciones;
+    RETURN variable;
+END;
+/
+
+------------------------------------------------
+FUNCIÓN 1: dias_vividos
+------------------------------------------------
+
+CREATE OR REPLACE FUNCTION dias_vividos(
+    id_dias_empleado IN empleado.id_empleado%TYPE
+) RETURN NUMBER IS
+    v_fecha DATE;
+    v_dias NUMBER;
+BEGIN
+    SELECT edad
+    INTO v_fecha
+    FROM empleado 
+    WHERE id_empleado = id_dias_empleado;
+
+    v_dias := TRUNC(SYSDATE - v_fecha);
+    RETURN v_dias;
+END;
+/
+
+USO:
+SELECT dias_vividos(1) AS dias_de_vida FROM dual;
+
+- SYSDATE -> fecha actual
+- TRUNC -> quita decimales
+- RETURN -> devuelve el resultado
+
+
+------------------------------------------------
+FUNCIÓN 2: area_circulo
+------------------------------------------------
+
+CREATE OR REPLACE FUNCTION area_circulo (
+    p_radio IN NUMBER
+) RETURN NUMBER IS
+    v_area NUMBER;
+BEGIN
+    v_area := 3.1416 * (p_radio * p_radio);
+    RETURN v_area;
+END;
+/
+
+USO:
+SELECT area_circulo(5) AS area FROM dual;
+
+
+========================================
+        DIFERENCIA CLAVE
+========================================
+
+PROCEDIMIENTO:
+- Se ejecuta con EXEC
+- No devuelve valor
+- Muestra datos con DBMS_OUTPUT
+
+FUNCIÓN:
+- Se usa con SELECT
+- Devuelve un valor con RETURN
+
