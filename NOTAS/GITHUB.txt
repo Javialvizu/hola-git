@@ -92,8 +92,126 @@ git add .
 git commit -m "Descripción del cambio"
 git push
 # (Y git pull antes si esperas cambios de otros)
+
 --------------------
 Metodo cuando se daña el repositorio local
 --------------------
 cp -r -i hola-git-roto/nombre_carpeta/* hola-git/nombre_carpeta/ #copiar datos al git clone
 rm -rf nombre_repositorios #Eliminar repositorio roto
+
+```txt
+==============================
+GIT - RAMAS (BRANCHES)
+==============================
+
+# Ver ramas locales
+git branch
+
+# Ver ramas remotas
+git branch -r
+
+# Ver todas las ramas
+git branch -a
+
+# Crear una rama
+git branch nombre_rama
+
+Ejemplo:
+git branch desarrollo
+git branch pruebas
+
+# Cambiar a una rama
+git switch nombre_rama
+
+Ejemplo:
+git switch desarrollo
+
+# Alternativa antigua
+git checkout nombre_rama
+
+# Crear y cambiar a la rama en un solo comando
+git switch -c nombre_rama
+
+Ejemplo:
+git switch -c desarrollo
+
+# Crear una rama local a partir de una rama remota
+git switch --track origin/nombre_rama
+
+Ejemplo:
+git switch --track origin/desarrollo
+
+# Subir una rama nueva a GitHub
+git push -u origin nombre_rama
+
+Ejemplo:
+git push -u origin desarrollo
+
+# Obtener información actualizada de las ramas remotas
+git fetch
+
+# Eliminar una rama local
+git branch -d nombre_rama
+
+# Forzar eliminación de una rama local
+git branch -D nombre_rama
+
+# Eliminar una rama remota
+git push origin --delete nombre_rama
+
+Ejemplo:
+git push origin --delete pruebas
+
+==============================
+MERGE ENTRE RAMAS
+==============================
+
+# Unir una rama a la rama actual
+git merge nombre_rama
+
+Ejemplo:
+git switch pruebas
+git merge desarrollo
+
+Ejemplo:
+git switch main
+git merge pruebas
+
+==============================
+FLUJO DE TRABAJO
+==============================
+
+main
+↑
+pruebas
+↑
+desarrollo
+
+1. Trabajar en desarrollo
+git switch desarrollo
+
+2. Guardar cambios
+git add .
+git commit -m "Descripción del cambio"
+git push
+
+3. Pasar cambios a pruebas
+git switch pruebas
+git merge desarrollo
+git push
+
+4. Pasar cambios a main
+git switch main
+git merge pruebas
+git push
+
+==============================
+VERIFICACIÓN
+==============================
+
+# Ver en qué rama estás
+git branch
+
+# Ver rama actual únicamente
+git branch --show-current
+```
