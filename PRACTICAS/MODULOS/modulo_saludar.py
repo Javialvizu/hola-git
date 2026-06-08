@@ -3,3 +3,5 @@ def saludar (nombre):
 
 def saludar_raro(nombre):
     return (f"Oli, {nombre}!")
+
+print("ola")
