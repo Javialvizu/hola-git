@@ -114,11 +114,8 @@ en la tabla ALUMNOS.
 7. OTORGAR TODOS LOS PERMISOS DML
 ------------------------------------------------
 
-Sobre una tabla:
-
-GRANT ALL
-ON alumnos
-TO javialvizu;
+ALTER USER BILLING_DB
+QUOTA UNLIMITED ON USERS;
 
 ------------------------------------------------
 8. QUITAR PERMISOS (REVOKE)
