@@ -54,6 +54,8 @@ mv origen destino - Mover/renombrar
 
 mv origen ../destino ' Mover a otra carpeta externa
 
+mv -i script.py /CODE - Mover archivo sin riesgos
+
 rm archivo.txt - Eliminar archivo
 
 rm -r carpeta/ - Eliminar carpeta (■■ cuidadoso)
